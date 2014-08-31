@@ -1,0 +1,1 @@
+select user_lname, user_fname, user_email,user_id,create_date from users;

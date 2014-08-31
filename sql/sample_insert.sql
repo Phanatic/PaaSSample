@@ -1,0 +1,1 @@
+insert into users(user_fname,user_lname,user_email,create_date) values('John','Doe','john.doe@foo.com','2014-08-29');
