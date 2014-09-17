@@ -160,7 +160,7 @@ class Test(unittest.TestCase):
             self.assertTrue(removed)
         except Exception as e: 
             self.fail('exception thrown in test = %s'%str(e))
-            
+    
 #    def testRemoveUserById(self):
 #        try:
 #            

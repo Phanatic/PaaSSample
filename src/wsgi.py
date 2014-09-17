@@ -10,7 +10,7 @@ import urllib2
 import urlparse
 import contextlib
 
-from bottle import route, request,get, post, put, delete, response
+from bottle import route, request,get, post, put, delete, response, template
 
 from users import User
 from users import UserDb
@@ -25,16 +25,24 @@ logging.basicConfig()
 log = logging.getLogger('paas-sample')
 log.setLevel(logging.DEBUG)
 
-mysql_url = os.environ['MYSQL_URL']
 
-dbname = os.environ['DBNAME']
-user = os.environ['USER']
-password = os.environ['PASSWORD']
+
+mysql_url = urlparse.urlparse(os.environ['MYSQL_URL'])
+
 #rdb = redis.Redis(host=url.hostname, port=url.port, password=url.password)
 
-userDb = UserDb(mysql_url,dbname,user,password)
+url = mysql_url.hostname
+password = mysql_url.password
+user = mysql_url.username
+dbname = mysql_url.path[1:] # slice off the '/'
 
-'''
+#user = os.environ['USER']
+#password = os.environ['PASSWORD']
+##rdb = redis.Redis(host=url.hostname, port=url.port, password=url.password)
+
+userDb = UserDb(url,dbname,user,password)
+
+'''    
 service routes
 '''
 
@@ -49,12 +57,12 @@ def adduser():
     addedUser = userDb.addUser(user)
     return json.dumps(addedUser.__dict__)
 
-@delete('/deleteuser/:id')
+@delete('/deleteuser/:userid')
 
-def deleteuser(id):
-    userDb.removeUserById(id)
+def deleteuser(userid):
+    userDb.removeUserById(userid)
     response.status = 201
- 
+
 @get('/getusers') 
 def getusers():
     users = userDb.getAllUsers()
@@ -79,6 +87,16 @@ view routes
 def home():
     return bottle.template('home')
 
+@route('/userForm/:action')
+def userForm(action):
+    if action == 'add':
+        return template('user.tpl',action='add',fname=None,lname=None,email=None) 
+    elif action == 'edit':
+        userid = request.GET['userid']
+        user = userDb.getUserById(userid)
+        return template('user.tpl',action='edit', userid=userid,fname=user.fname,lname=user.lname,email=user.email)
+        
+
 @route('/static/:filename')
 def serve_static(filename):
     return bottle.static_file(filename, root=STATIC_ROOT)
@@ -90,7 +108,8 @@ service runner code
 application = bottle.app()
 application.catchall = False
 
-url = urlparse.urlparse(os.environ['URL'])
-port = int(os.getenv('PORT'))
+#if os.getenv('SELFHOST', False):
+url = os.getenv('VCAP_APP_HOST')
+port = int(os.getenv('VCAP_APP_PORT'))
 bottle.run(application, host=url, port=port)
 

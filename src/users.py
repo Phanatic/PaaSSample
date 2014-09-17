@@ -41,9 +41,22 @@ class UserDb:
     def __init__(self,url,dbName,userName,password):
         try:
             self.db = MySQLdb.connect(host=url,user=userName,passwd=password,db=dbName)
+            cur = self.db.cursor()
+            cur.execute('use %s'%dbName)
         except MySQLdb.Error, e:
             self.handleMySQLException(e,True)
     
+    def getUserById(self,userId):
+        try:
+            
+            cur = self.db.cursor()
+            cur.execute("select user_id, user_fname, user_lname, user_email from users where user_id=%s"%userId)
+            rows = cur.fetchall()
+            user = User(rows[0])
+            return user
+        except MySQLdb.Error, e:
+            self.handleMySQLException(e)
+        
     def getByRawQuery(self,query):
         users = []
         try:
