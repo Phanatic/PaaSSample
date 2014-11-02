@@ -5,7 +5,7 @@ applications:
   services:
     ${name}-db:
       type: mysql
-  url: paas-sample.15.126.231.221.xip.io
+  url: paas-sample.10.8.50.236.xip.io
   stackato:
     env:
         SOMEVAR: 1

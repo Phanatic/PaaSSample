@@ -29,6 +29,7 @@ log.setLevel(logging.DEBUG)
 
 mysql_url = urlparse.urlparse(os.environ['MYSQL_URL'])
 
+print os.environ['MYSQL_URL']
 #rdb = redis.Redis(host=url.hostname, port=url.port, password=url.password)
 
 url = mysql_url.hostname
@@ -109,6 +110,7 @@ application = bottle.app()
 application.catchall = False
 
 #if os.getenv('SELFHOST', False):
+#UNCOMMENT BEFORE RUNNING ON CLOUD
 url = os.getenv('VCAP_APP_HOST')
 port = int(os.getenv('VCAP_APP_PORT'))
 bottle.run(application, host=url, port=port)

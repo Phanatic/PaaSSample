@@ -8,8 +8,9 @@
     <link type="text/css" rel="stylesheet" href="http://cdn.datatables.net/1.10.2/css/jquery.dataTables.min.css">
   </head>
   <body>
+  <div class="container">
   	<a href="/">back</a><br>
-  	<form>
+  	<form class="sub-container">
 %if fname != None:
   		First Name: <input type="text" name="fname" value="{{fname}}"/><br>
 %else:
@@ -26,10 +27,16 @@
 		Email: <input type="text" name="email"><br>
 %end
 %if action == 'add':
-  		<input type="submit" value="Add"/>
+  		<input id="addUser" type="submit" value="Add"/>
 %else:
-	 <input type="submit" value="Edit"/>
+	 <input id="edit" type="submit" value="Edit"/>
 %end
   	</form>
+  	</div>
+  	
+  	<script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <script type="text/javascript" src="http://cdn.datatables.net/1.10.2/js/jquery.dataTables.min.js"></script>
+    <script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+    <script type="text/javascript" src="/static/useradd.js"></script>
   </body>
 </html>

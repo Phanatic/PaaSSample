@@ -4,7 +4,7 @@
         
 $(document).ready(function() {
 	var t = $('#userTable').DataTable();
-	//TODO: make an ajax call to host (TODO: how to get URL injected here? domain name?)
+	$("#dialog-message").hide();
 	$.get('/getusers',function(data, status) {
 		console.log(data);
 		var obj = $.parseJSON(data);
@@ -13,6 +13,7 @@ $(document).ready(function() {
 			var strStart = '<input type="radio" name="user" value="';
 			var strEnd = '"/>';
 			var checkBoxStr = strStart + this['id']+strEnd;
+			var linkstr = '<a href="/adduser/">adduser</a>'
 			t.row.add([checkBoxStr,this['fname'],this['lname'],this['id'],this['email']]).draw();
 			});
 					
@@ -21,9 +22,29 @@ $(document).ready(function() {
 	console.log("ready")
 });
 
+
+
 $("#addUser").click(function() {
-	alert("clicked add!");
 	window.location.href = '/userForm/add';
+	
+	/*$("#dialog-message").dialog({
+	    modal: true,
+	    draggable: false,
+	    resizable: false,
+	    show: 'blind',
+	    hide: 'blind',
+	    width: 400,
+	    dialogClass: 'container',
+	    buttons: {
+		        "Add": function() {
+		        	$.post('/userform/add')
+		            $(this).dialog("close");
+		        }
+		    }
+		});
+		
+	$("#dialog-message").show();
+	*/
 });
 
 $("#editUser").click(function(){
