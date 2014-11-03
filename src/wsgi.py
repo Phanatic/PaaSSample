@@ -56,7 +56,8 @@ def adduser():
     
     user = User(fname=fname,lname=lname,email=email )
     addedUser = userDb.addUser(user)
-    return json.dumps(addedUser.__dict__)
+    str =  json.dumps(addedUser.__dict__)
+    return str
 
 @delete('/deleteuser/:userid')
 
@@ -111,7 +112,7 @@ application.catchall = False
 
 #if os.getenv('SELFHOST', False):
 #UNCOMMENT BEFORE RUNNING ON CLOUD
-url = os.getenv('VCAP_APP_HOST')
+#url = os.getenv('VCAP_APP_HOST')
 port = int(os.getenv('VCAP_APP_PORT'))
 bottle.run(application, host=url, port=port)
-
+# this is the last line

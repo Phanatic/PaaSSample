@@ -10,7 +10,14 @@
   </head>
   <body>
  	
- 	
+ 	<div id="dialog-message" title="Important information">
+	    <span class="ui-state-default"><span class="ui-icon ui-icon-info" style="float:left; margin:0 7px 0 0;"></span></span>
+	    <div style="margin-left: 23px;">
+		    First Name: <input type="text" name="fname" id="fname"><br>
+		    Last Name: <input type="text" name="lname" id="lname"><br>
+		    Email: <input type="text" name="email" id="email"><br> 
+	    </div>
+    </div>
   	<div class="container">
 	    <h1>The List</h1>
 	    

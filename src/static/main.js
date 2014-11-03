@@ -25,9 +25,9 @@ $(document).ready(function() {
 
 
 $("#addUser").click(function() {
-	window.location.href = '/userForm/add';
+	//window.location.href = '/userForm/add';
 	
-	/*$("#dialog-message").dialog({
+	$("#dialog-message").dialog({
 	    modal: true,
 	    draggable: false,
 	    resizable: false,
@@ -36,15 +36,25 @@ $("#addUser").click(function() {
 	    width: 400,
 	    dialogClass: 'container',
 	    buttons: {
-		        "Add": function() {
-		        	$.post('/userform/add')
-		            $(this).dialog("close");
-		        }
-		    }
-		});
+	        "Add": function() {
+	        	
+	        	firstname = $("#fname").val();
+	        	lastname = $("#lname").val();
+	        	email_addr = $("#email").val();
+	        	$.post('/adduser',{fname: firstname, lname : lastname, email: email_addr }, 
+	        		function(data) { 
+	        			console.log(data);
+	        			var t = $('#userTable').DataTable();
+	        			t.ajax.reload();
+        			}
+        			);
+	            $(this).dialog("close");
+	        }
+	    }
+	});
 		
 	$("#dialog-message").show();
-	*/
+	
 });
 
 $("#editUser").click(function(){
